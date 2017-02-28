@@ -1,24 +1,22 @@
-import Dispatcher from './Dispatcher';
-
+// Updated for Redux
+// No need for a dispatcher
 export const increment = () => {
     console.log('action: INCREMENT');
     const action = {type: 'INCREMENT'};
-    Dispatcher.dispatch(action);
-
+    return action;
 };
 
 
 export const decrement = () => {
     console.log('action: DECREMENT');
     const action = {type: 'DECREMENT'};
-    Dispatcher.dispatch(action);
-
+    return action
 };
 
 
 export const zero = () => {
     console.log('action: ZERO');
     const action = {type: 'ZERO'};
-    Dispatcher.dispatch(action);
-
+    return action;
+    
 };

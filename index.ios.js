@@ -8,28 +8,27 @@ import {
 } from 'react-native';
 
 import { increment, decrement, zero} from './src/actions';
-import TallyStore from './src/TallyStore';
+import store from './src/store';
 
 class Countly extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          tally: TallyStore.getTally()
+          tally: store.getState(),
       };
       this.updateState = this.updateState.bind(this);
   }
-
   componentDidMount() {
-      TallyStore.addChangeListener(this.updateState);
+      this.setState({
+          unsubscribe: store.subscribe(this.updateState)
+      });
   }
-
   componentWillUnMount() {
-      TallyStore.removeChangeListener(this.updateState);
+      this.state.unsubscribe();
   }
-
   updateState() {
-      this.setState ({
-          tally: TallyStore.getTally()
+      this.setState({
+         tally: store.getState()
       });
   }
 
@@ -43,21 +42,21 @@ class Countly extends Component {
           Tally: {this.state.tally.count}
         </Text>
         <TouchableOpacity
-            onPress={increment}
+            onPress={ () => store.dispatch(increment()) }
             style={styles.button}>
           <Text style={styles.buttonText}>
             +
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={decrement}
+            onPress={ () => store.dispatch(decrement()) }
             style={styles.button}>
           <Text style={styles.buttonText}>
             -
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-            onPress={zero}
+            onPress={ () => store.dispatch(zero()) }
             style={styles.button}>
           <Text style={styles.buttonText}>
             0

@@ -1,3 +1,4 @@
+// Not require when using redux
 
 class Dispatcher {
 
